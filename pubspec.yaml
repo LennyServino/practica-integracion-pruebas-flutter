@@ -1,5 +1,5 @@
 name: lab_habitos_lenny_servino
-description: "A new Flutter project."
+description: "Panel de hábitos diarios con Flutter y Cloud Firestore."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -48,6 +48,9 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
   flutterfire_cli: ^1.5.0
+  fake_cloud_firestore: ^3.1.0
+  integration_test:
+    sdk: flutter
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
