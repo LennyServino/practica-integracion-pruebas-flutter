@@ -24,15 +24,29 @@ class _FormularioHabitoState extends State<FormularioHabito> {
   final _formKey = GlobalKey<FormState>();
   final _controller = TextEditingController();
 
-  Future<void> _guardarHabito() async {
+  bool _guardando = false;
+
+  void _guardarHabito() {
+    if (_guardando) return;
     // INC-002: validar antes de llamar al servicio (no se aceptan vacíos
     // ni nombres formados solo por espacios).
     if (!_formKey.currentState!.validate()) return;
-    await widget.repository.agregarHabito(
-      _controller.text.trim(),
-      notaActual: widget.notaActual,
-    );
-    if (mounted) Navigator.pop(context); // Regresa a Pantalla 1
+    _guardando = true;
+
+    // INC-006: antes se hacía `await add(...)`. Sin conexión ese Future no
+    // termina hasta que el servidor confirma, así que la pantalla se quedaba
+    // congelada; y si fallaba, la excepción no se capturaba. Ahora se regresa
+    // de inmediato (la caché local ya muestra el hábito) y el error, si
+    // ocurre, se avisa con un SnackBar en el panel.
+    final messenger = ScaffoldMessenger.of(context);
+    widget.repository
+        .agregarHabito(_controller.text.trim(), notaActual: widget.notaActual)
+        .catchError((Object _) {
+          messenger.showSnackBar(
+            const SnackBar(content: Text(mensajeErrorEscritura)),
+          );
+        });
+    Navigator.pop(context); // Regresa a Pantalla 1
   }
 
   @override

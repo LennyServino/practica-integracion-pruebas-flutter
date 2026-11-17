@@ -1,0 +1,29 @@
+# INC-006 - ANTES de la corrección (lib/ sin cambios: se espera FALLA)
+$ flutter test test/widget/formulario_habito_test.dart test/widget/panel_habitos_test.dart
+00:00 +0: test/widget/formulario_habito_test.dart: CP-07: nombre válido crea el hábito y regresa al panel
+00:00 +1: test/widget/formulario_habito_test.dart: INC-006 (regresión): sin conexión el formulario no se congela
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "Mis Hábitos": []>
+00:01 +1 -1: test/widget/formulario_habito_test.dart: INC-006 (regresión): sin conexión el formulario no se congela [E]
+00:01 +1 -1: test/widget/formulario_habito_test.dart: INC-006: si Firestore rechaza el alta se avisa al usuario
+00:01 +1 -2: test/widget/formulario_habito_test.dart: INC-006: si Firestore rechaza el alta se avisa al usuario [E]
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "Mis Hábitos": []>
+00:01 +1 -2: test/widget/formulario_habito_test.dart: CP-04: campo vacío muestra mensaje y no llama al servicio
+00:01 +2 -2: test/widget/formulario_habito_test.dart: INC-002 (regresión): solo espacios no crea el hábito
+00:01 +3 -2: test/widget/formulario_habito_test.dart: INC-002: el nombre se guarda sin espacios sobrantes
+00:02 +4 -2: test/widget/panel_habitos_test.dart: CP-12: lista vacía muestra mensaje de estado vacío
+00:02 +5 -2: test/widget/panel_habitos_test.dart: CP-08: con datos muestra hábitos, progreso y nota
+00:03 +6 -2: test/widget/panel_habitos_test.dart: CP-09: marcar un hábito actualiza el progreso
+00:03 +7 -2: test/widget/panel_habitos_test.dart: CP-10: eliminar un hábito lo quita de la lista
+00:03 +8 -2: test/widget/panel_habitos_test.dart: Modo enfoque oculta los hábitos completados
+00:03 +9 -2: test/widget/panel_habitos_test.dart: CP-12: error de lectura muestra mensaje sin cerrar la app
+00:03 +10 -2: test/widget/panel_habitos_test.dart: Guardar nota con hábitos la muestra en la tarjeta
+00:03 +11 -2: test/widget/panel_habitos_test.dart: INC-003 (regresión): sin hábitos no confirma una nota falsa
+00:03 +12 -2: test/widget/panel_habitos_test.dart: Reiniciar día desmarca hábitos y limpia la nota (INC-005)
+00:03 +13 -2: test/widget/panel_habitos_test.dart: INC-006 (regresión): error de escritura avisa sin romper
+00:03 +13 -3: test/widget/panel_habitos_test.dart: INC-006 (regresión): error de escritura avisa sin romper [E]
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "No se pudo guardar el cambio en Firebase.
+00:03 +13 -3: test/widget/panel_habitos_test.dart: CP-05/CP-06: navega al formulario y regresa con "atrás"
+00:04 +14 -3: Some tests failed.

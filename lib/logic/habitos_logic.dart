@@ -27,6 +27,10 @@ double calcularProgreso(int cumplidos, int total) {
   return (cumplidos / total).clamp(0.0, 1.0);
 }
 
+/// Mensaje mostrado cuando Firestore rechaza una escritura (INC-006).
+const String mensajeErrorEscritura =
+    'No se pudo guardar el cambio en Firebase. Inténtalo de nuevo.';
+
 /// Longitud máxima permitida para el nombre de un hábito.
 const int maxLongitudNombre = 40;
 

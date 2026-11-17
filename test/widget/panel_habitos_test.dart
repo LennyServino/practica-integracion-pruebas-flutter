@@ -159,6 +159,28 @@ void main() {
     expect(find.text('Nota de ayer'), findsNothing);
   });
 
+  testWidgets('INC-006 (regresión): error de escritura avisa sin romper', (
+    tester,
+  ) async {
+    final repo = FakeHabitosRepository(
+      habitos: const [Habito(id: '1', nombre: 'Leer')],
+      errorAlEscribir: Exception('permission-denied'),
+    );
+    await abrirApp(tester, repo);
+
+    await tester.tap(find.byType(Checkbox));
+    await tester.pump();
+
+    expect(repo.llamadas, ['alternarHabito:1']);
+    expect(
+      find.text(
+        'No se pudo guardar el cambio en Firebase. Inténtalo de nuevo.',
+      ),
+      findsOneWidget,
+    );
+    expect(find.text('Leer'), findsOneWidget); // la app sigue en pie
+  });
+
   testWidgets('CP-05/CP-06: navega al formulario y regresa con "atrás"', (
     tester,
   ) async {

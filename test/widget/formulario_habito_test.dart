@@ -30,6 +30,42 @@ void main() {
     expect(find.text('Leer'), findsOneWidget);
   });
 
+  testWidgets('INC-006 (regresión): sin conexión el formulario no se congela', (
+    tester,
+  ) async {
+    final repo = FakeHabitosRepository(sinConexion: true);
+    await abrirFormulario(tester, repo);
+
+    await tester.enterText(find.byKey(const Key('campoNombreHabito')), 'Leer');
+    await tester.tap(find.text('Guardar Hábito'));
+    await tester.pumpAndSettle();
+
+    // Regresa al panel y el hábito ya se ve (caché local de Firestore).
+    expect(find.text('Mis Hábitos'), findsOneWidget);
+    expect(find.text('Leer'), findsOneWidget);
+  });
+
+  testWidgets('INC-006: si Firestore rechaza el alta se avisa al usuario', (
+    tester,
+  ) async {
+    final repo = FakeHabitosRepository(
+      errorAlEscribir: Exception('permission-denied'),
+    );
+    await abrirFormulario(tester, repo);
+
+    await tester.enterText(find.byKey(const Key('campoNombreHabito')), 'Leer');
+    await tester.tap(find.text('Guardar Hábito'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Mis Hábitos'), findsOneWidget);
+    expect(
+      find.text(
+        'No se pudo guardar el cambio en Firebase. Inténtalo de nuevo.',
+      ),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('CP-04: campo vacío muestra mensaje y no llama al servicio', (
     tester,
   ) async {

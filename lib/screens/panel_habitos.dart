@@ -34,6 +34,19 @@ class _PanelHabitosState extends State<PanelHabitos> {
     super.dispose();
   }
 
+  /// INC-006: las escrituras se lanzaban sin manejar errores; si Firestore
+  /// las rechazaba (reglas, cuota, etc.) el error quedaba sin capturar y el
+  /// usuario no se enteraba. No se espera la confirmación del servidor para
+  /// no bloquear la UI sin conexión (la caché local ya refleja el cambio).
+  void _ejecutar(Future<void> operacion) {
+    final messenger = ScaffoldMessenger.of(context);
+    operacion.catchError((Object _) {
+      messenger.showSnackBar(
+        const SnackBar(content: Text(mensajeErrorEscritura)),
+      );
+    });
+  }
+
   void _cambiarMeta(double v) => setState(() => _meta = v.round());
 
   void _alternarEnfoque(bool v) => setState(() => _enfoque = v);
@@ -51,7 +64,7 @@ class _PanelHabitosState extends State<PanelHabitos> {
       );
       return;
     }
-    _repo.guardarNota(texto, habitos);
+    _ejecutar(_repo.guardarNota(texto, habitos));
     _notaCtrl.clear();
     FocusScope.of(context).unfocus(); // Oculta teclado
     ScaffoldMessenger.of(
@@ -60,7 +73,7 @@ class _PanelHabitosState extends State<PanelHabitos> {
   }
 
   void _reiniciarDia(List<Habito> habitos) {
-    _repo.reiniciarDia(habitos);
+    _ejecutar(_repo.reiniciarDia(habitos));
     setState(() {
       _meta = _metaInicial;
       _enfoque = false;
@@ -191,12 +204,14 @@ class _PanelHabitosState extends State<PanelHabitos> {
                       ),
                     ),
                     value: habito.cumplido,
-                    onChanged: (_) =>
-                        _repo.alternarHabito(habito.id, habito.cumplido),
+                    onChanged: (_) => _ejecutar(
+                      _repo.alternarHabito(habito.id, habito.cumplido),
+                    ),
                     secondary: IconButton(
                       tooltip: 'Eliminar',
                       icon: const Icon(Icons.delete, color: Colors.red),
-                      onPressed: () => _repo.eliminarHabito(habito.id),
+                      onPressed: () =>
+                          _ejecutar(_repo.eliminarHabito(habito.id)),
                     ),
                   ),
               const Divider(height: 40),

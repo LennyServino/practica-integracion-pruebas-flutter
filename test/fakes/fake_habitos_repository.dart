@@ -12,6 +12,7 @@ class FakeHabitosRepository implements HabitosRepository {
     this.nota = '',
     this.errorAlLeer,
     this.errorAlEscribir,
+    this.sinConexion = false,
   }) : _habitos = [...habitos];
 
   final List<Habito> _habitos;
@@ -23,6 +24,11 @@ class FakeHabitosRepository implements HabitosRepository {
 
   /// Si no es null, toda escritura falla con este error.
   final Object? errorAlEscribir;
+
+  /// Simula Firestore sin conexión: el cambio se aplica en la caché local
+  /// (la UI lo ve) pero el Future nunca termina porque el servidor no
+  /// confirma la escritura.
+  final bool sinConexion;
 
   final List<String> llamadas = [];
   final _cambios = StreamController<EstadoDia>.broadcast();
@@ -39,6 +45,7 @@ class FakeHabitosRepository implements HabitosRepository {
     if (errorAlEscribir != null) throw errorAlEscribir!;
     cambio();
     _emitir();
+    if (sinConexion) return Completer<void>().future;
   }
 
   @override
