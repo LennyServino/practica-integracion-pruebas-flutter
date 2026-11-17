@@ -41,6 +41,16 @@ class _PanelHabitosState extends State<PanelHabitos> {
   void _guardarNota(List<Habito> habitos) {
     final texto = _notaCtrl.text.trim();
     if (texto.isEmpty) return;
+    // INC-003: la nota vive en los documentos de hábito; sin hábitos no hay
+    // dónde guardarla. Antes se mostraba "Nota guardada" sin guardar nada.
+    if (habitos.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Agrega al menos un hábito para guardar la nota'),
+        ),
+      );
+      return;
+    }
     _repo.guardarNota(texto, habitos);
     _notaCtrl.clear();
     FocusScope.of(context).unfocus(); // Oculta teclado

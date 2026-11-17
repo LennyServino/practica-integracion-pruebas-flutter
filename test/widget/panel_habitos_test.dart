@@ -103,6 +103,43 @@ void main() {
     expect(find.text('Error al cargar'), findsOneWidget);
   });
 
+  testWidgets('Guardar nota con hábitos la muestra en la tarjeta', (
+    tester,
+  ) async {
+    final repo = FakeHabitosRepository(
+      habitos: const [Habito(id: '1', nombre: 'Leer')],
+    );
+    await abrirApp(tester, repo);
+
+    await tester.enterText(find.byKey(const Key('campoNota')), 'Gran día');
+    await tester.tap(find.text('Guardar'));
+    await tester.pump();
+
+    expect(repo.llamadas, ['guardarNota:Gran día']);
+    expect(find.text('Gran día'), findsOneWidget);
+    expect(find.text('Nota guardada en Firebase'), findsOneWidget);
+  });
+
+  testWidgets('INC-003 (regresión): sin hábitos no confirma una nota falsa', (
+    tester,
+  ) async {
+    final repo = FakeHabitosRepository();
+    await abrirApp(tester, repo);
+
+    await tester.enterText(find.byKey(const Key('campoNota')), 'Gran día');
+    await tester.tap(find.text('Guardar'));
+    await tester.pump();
+
+    expect(find.text('Nota guardada en Firebase'), findsNothing);
+    expect(
+      find.text('Agrega al menos un hábito para guardar la nota'),
+      findsOneWidget,
+    );
+    expect(repo.llamadas, isEmpty);
+    // El texto escrito no se pierde.
+    expect(find.widgetWithText(TextField, 'Gran día'), findsOneWidget);
+  });
+
   testWidgets('CP-05/CP-06: navega al formulario y regresa con "atrás"', (
     tester,
   ) async {
