@@ -46,3 +46,11 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# Binarios locales (p. ej. firebase-tools standalone) - INC-007
+*.exe
+
+# Configuración local de Firebase (credenciales) - INC-008
+firebase.env.json
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
