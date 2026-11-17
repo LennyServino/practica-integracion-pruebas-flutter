@@ -1,0 +1,22 @@
+# INC-004 - DESPUÉS de la corrección (prueba de regresión)
+$ flutter test test/unit/firestore_habitos_repository_test.dart test/unit/habitos_logic_test.dart
+00:00 +0: test/unit/firestore_habitos_repository_test.dart: agregarHabito crea el documento con los campos esperados
+00:00 +1: test/unit/firestore_habitos_repository_test.dart: observarDia emite hábitos y la nota guardada
+00:00 +2: test/unit/firestore_habitos_repository_test.dart: INC-004 (regresión): observarDia ordena por fecha de creación
+00:00 +3: test/unit/firestore_habitos_repository_test.dart: alternarHabito invierte el campo cumplido
+00:00 +4: test/unit/firestore_habitos_repository_test.dart: eliminarHabito borra el documento
+00:00 +5: test/unit/firestore_habitos_repository_test.dart: guardarNota actualiza nota_dia en todos los hábitos
+00:00 +6: test/unit/firestore_habitos_repository_test.dart: reiniciarDia desmarca todos los hábitos
+00:00 +7: test/unit/habitos_logic_test.dart: calcularProgreso sin hábitos devuelve 0 (no divide entre cero)
+00:00 +8: test/unit/habitos_logic_test.dart: calcularProgreso calcula la fracción de cumplidos
+00:00 +9: test/unit/habitos_logic_test.dart: calcularProgreso nunca supera 1.0 aunque los datos sean inconsistentes
+00:00 +10: test/unit/habitos_logic_test.dart: validarNombreHabito (INC-002) rechaza null, vacío y solo espacios
+00:00 +11: test/unit/habitos_logic_test.dart: validarNombreHabito (INC-002) rechaza nombres demasiado largos
+00:00 +12: test/unit/habitos_logic_test.dart: validarNombreHabito (INC-002) acepta un nombre válido (ignorando espacios externos)
+00:00 +13: test/unit/habitos_logic_test.dart: ordenarPorFecha (INC-004) ordena ascendente, sin fecha al final y desempata por nombre
+00:00 +14: test/unit/habitos_logic_test.dart: ordenarPorFecha (INC-004) no modifica la lista original
+00:00 +15: test/unit/habitos_logic_test.dart: mensajeMotivacional 0 % → ¡Empecemos!
+00:00 +16: test/unit/habitos_logic_test.dart: mensajeMotivacional menos de 50 % → Buen inicio
+00:00 +17: test/unit/habitos_logic_test.dart: mensajeMotivacional entre 50 % y 99 % → ¡Vas muy bien!
+00:00 +18: test/unit/habitos_logic_test.dart: mensajeMotivacional 100 % → ¡Día completado!
+00:00 +19: All tests passed!

@@ -2,6 +2,25 @@
 /// unitarias.
 library;
 
+import '../models/habito.dart';
+
+/// Ordena por fecha de creación ascendente (INC-004). Los hábitos sin fecha
+/// van al final, y a igualdad de fecha se ordena por nombre.
+/// Se hace en el cliente en lugar de `orderBy` en Firestore porque `orderBy`
+/// excluye los documentos que no tienen el campo.
+List<Habito> ordenarPorFecha(Iterable<Habito> habitos) {
+  final lista = [...habitos];
+  lista.sort((a, b) {
+    final fa = a.fechaCreacion, fb = b.fechaCreacion;
+    if (fa == null && fb == null) return a.nombre.compareTo(b.nombre);
+    if (fa == null) return 1;
+    if (fb == null) return -1;
+    final c = fa.compareTo(fb);
+    return c != 0 ? c : a.nombre.compareTo(b.nombre);
+  });
+  return lista;
+}
+
 /// Fracción de hábitos cumplidos entre 0.0 y 1.0. Con 0 hábitos devuelve 0.
 double calcularProgreso(int cumplidos, int total) {
   if (total <= 0) return 0;

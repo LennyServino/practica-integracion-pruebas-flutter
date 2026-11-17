@@ -33,6 +33,38 @@ void main() {
     expect(dia.nota, 'Nota X');
   });
 
+  test(
+    'INC-004 (regresión): observarDia ordena por fecha de creación',
+    () async {
+      final col = db.collection('habitos');
+      // Los IDs van en orden alfabético opuesto a la fecha, a propósito.
+      await col.doc('a').set({
+        'nombre': 'Tercero',
+        'fecha_creacion': '2026-11-17T10:00:00.000',
+      });
+      await col.doc('b').set({
+        'nombre': 'Primero',
+        'fecha_creacion': '2026-11-17T08:00:00.000',
+      });
+      await col.doc('c').set({
+        'nombre': 'Segundo',
+        'fecha_creacion': '2026-11-17T09:00:00.000',
+      });
+      await col.doc('0').set({'nombre': 'Sin fecha (al final)'});
+
+      final nombres = (await repo.observarDia().first).habitos
+          .map((h) => h.nombre)
+          .toList();
+
+      expect(nombres, [
+        'Primero',
+        'Segundo',
+        'Tercero',
+        'Sin fecha (al final)',
+      ]);
+    },
+  );
+
   test('alternarHabito invierte el campo cumplido', () async {
     await repo.agregarHabito('Correr');
     final id = (await repo.observarDia().first).habitos.single.id;

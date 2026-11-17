@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../logic/habitos_logic.dart';
 import '../models/estado_dia.dart';
 import '../models/habito.dart';
 import 'habitos_repository.dart';
@@ -18,7 +19,11 @@ class FirestoreHabitosRepository implements HabitosRepository {
   Stream<EstadoDia> observarDia() {
     return _habitos.snapshots().map((snapshot) {
       final docs = snapshot.docs;
-      final habitos = docs.map((d) => Habito.fromMap(d.id, d.data())).toList();
+      // INC-004: sin ordenar, Firestore devuelve los documentos por ID
+      // (aleatorio), no por fecha de creación.
+      final habitos = ordenarPorFecha(
+        docs.map((d) => Habito.fromMap(d.id, d.data())),
+      );
       final nota = docs.isEmpty ? '' : (docs.first.data()['nota_dia'] ?? '');
       return EstadoDia(habitos: habitos, nota: nota is String ? nota : '');
     });

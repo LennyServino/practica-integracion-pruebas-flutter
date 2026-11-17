@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lab_habitos_lenny_servino/logic/habitos_logic.dart';
+import 'package:lab_habitos_lenny_servino/models/habito.dart';
 
 void main() {
   group('calcularProgreso', () {
@@ -31,6 +32,28 @@ void main() {
     test('acepta un nombre válido (ignorando espacios externos)', () {
       expect(validarNombreHabito('  Leer 20 min  '), isNull);
       expect(validarNombreHabito('a' * maxLongitudNombre), isNull);
+    });
+  });
+
+  group('ordenarPorFecha (INC-004)', () {
+    test('ordena ascendente, sin fecha al final y desempata por nombre', () {
+      final r = ordenarPorFecha([
+        const Habito(id: '1', nombre: 'Sin fecha'),
+        Habito(id: '2', nombre: 'B', fechaCreacion: DateTime(2026, 1, 2)),
+        Habito(id: '3', nombre: 'Z', fechaCreacion: DateTime(2026, 1, 1)),
+        Habito(id: '4', nombre: 'A', fechaCreacion: DateTime(2026, 1, 2)),
+      ]);
+
+      expect(r.map((h) => h.id), ['3', '4', '2', '1']);
+    });
+
+    test('no modifica la lista original', () {
+      final original = [
+        Habito(id: '1', nombre: 'X', fechaCreacion: DateTime(2026, 2, 1)),
+        Habito(id: '2', nombre: 'Y', fechaCreacion: DateTime(2026, 1, 1)),
+      ];
+      ordenarPorFecha(original);
+      expect(original.first.id, '1');
     });
   });
 
