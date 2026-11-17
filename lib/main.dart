@@ -2,19 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'firebase_options.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: 'TU_API_KEY',
-      appId: 'TU_APP_ID',
-      messagingSenderId: 'TU_SENDER_ID',
-      projectId: 'lab-habitos-test',
-    ),
-  );
+  if (!DefaultFirebaseOptions.configurado) {
+    runApp(const _ConfiguracionFaltante());
+    return;
+  }
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const MyApp());
+}
+
+/// Se muestra si la app se ejecuta sin `--dart-define-from-file`.
+class _ConfiguracionFaltante extends StatelessWidget {
+  const _ConfiguracionFaltante();
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Padding(
+            padding: EdgeInsets.all(24),
+            child: Text(
+              'Falta la configuración de Firebase.\n\n'
+              'Ejecuta:\nflutter run --dart-define-from-file=firebase.env.json',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
