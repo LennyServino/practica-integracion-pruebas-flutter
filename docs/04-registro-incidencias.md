@@ -97,4 +97,3 @@ Cada incidencia corregida tiene una **prueba de regresión** que falla con el c�
 - **Severidad / Prioridad / Origen:** Alta / P1 / Configuración
 - **Obtenido:** `apiKey`, `appId`, `messagingSenderId` y `projectId` aparecían literalmente en `lib/main.dart`, y la práctica prohíbe incluir claves de Firebase.
 - **Corrección:** `lib/firebase_options.dart` lee los valores con `String.fromEnvironment`. Se cargan desde `firebase.env.json` (ignorado por git) con `--dart-define-from-file`. Se versiona solo `firebase.env.example.json`. Si falta la configuración, la app muestra una pantalla con las instrucciones en lugar de cerrarse.
-- **Nota:** la clave sigue en la historia del commit «Primera integracion de firebase al proyecto». Se recomienda **restringir la API key** en Google Cloud Console (solo a la app Android y a la API de Firestore) o rotarla, y revisar las reglas de Firestore.

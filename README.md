@@ -48,7 +48,7 @@ docs/                                  # Atestados de la práctica (alcance, flu
    ```bash
    flutter run --dart-define-from-file=firebase.env.json
    ```
-   En VS Code basta con **F5**: la configuración "lab_habitos (Firebase)" de `.vscode/launch.json` ya incluye ese parámetro.
+   En VS Code basta con **F5**: la configuración "practica-integracion-pruebas-flutter (Firebase)" de `.vscode/launch.json` ya incluye ese parámetro.
    Si se ejecuta sin la configuración, la app muestra una pantalla con estas mismas instrucciones.
 
 ### Firestore

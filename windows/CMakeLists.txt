@@ -1,10 +1,10 @@
 # Project-level configuration.
 cmake_minimum_required(VERSION 3.14)
-project(lab_habitos_lenny_servino LANGUAGES CXX)
+project(practica_integracion_pruebas_flutter LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
-set(BINARY_NAME "lab_habitos_lenny_servino")
+set(BINARY_NAME "practica_integracion_pruebas_flutter")
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.

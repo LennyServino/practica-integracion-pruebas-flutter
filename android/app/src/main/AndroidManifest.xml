@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="lab_habitos_lenny_servino"
+        android:label="practica-integracion-pruebas-flutter"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "lab_habitos_lenny_servino" "\0"
+            VALUE "FileDescription", "practica_integracion_pruebas_flutter" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "lab_habitos_lenny_servino" "\0"
+            VALUE "InternalName", "practica_integracion_pruebas_flutter" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2026 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "lab_habitos_lenny_servino.exe" "\0"
-            VALUE "ProductName", "lab_habitos_lenny_servino" "\0"
+            VALUE "OriginalFilename", "practica_integracion_pruebas_flutter.exe" "\0"
+            VALUE "ProductName", "practica_integracion_pruebas_flutter" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

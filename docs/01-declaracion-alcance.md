@@ -1,6 +1,6 @@
 # 01 — Declaración de alcance
 
-**Proyecto:** Panel de Hábitos del Día (`lab_habitos_lenny_servino`)
+**Proyecto:** Panel de Hábitos del Día (`practica-integracion-pruebas-flutter`)
 **Rama de trabajo:** `semana16-integracion`
 **Plataforma probada:** Android
 

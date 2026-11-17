@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lab_habitos_lenny_servino/logic/habitos_logic.dart';
-import 'package:lab_habitos_lenny_servino/models/habito.dart';
+import 'package:practica_integracion_pruebas_flutter/logic/habitos_logic.dart';
+import 'package:practica_integracion_pruebas_flutter/models/habito.dart';
 
 void main() {
   group('calcularProgreso', () {

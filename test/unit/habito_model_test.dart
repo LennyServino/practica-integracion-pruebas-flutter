@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lab_habitos_lenny_servino/models/estado_dia.dart';
-import 'package:lab_habitos_lenny_servino/models/habito.dart';
+import 'package:practica_integracion_pruebas_flutter/models/estado_dia.dart';
+import 'package:practica_integracion_pruebas_flutter/models/habito.dart';
 
 void main() {
   group('Habito.fromMap', () {

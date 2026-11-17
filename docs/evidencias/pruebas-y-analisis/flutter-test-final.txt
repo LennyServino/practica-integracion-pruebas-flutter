@@ -1,4 +1,5 @@
 $ flutter test -j 1 --reporter expanded
+00:00 +0: loading test/unit/firestore_habitos_repository_test.dart
 00:00 +0: test/unit/firestore_habitos_repository_test.dart: agregarHabito crea el documento con los campos esperados
 00:00 +1: test/unit/firestore_habitos_repository_test.dart: observarDia emite hábitos y la nota guardada
 00:00 +2: test/unit/firestore_habitos_repository_test.dart: INC-004 (regresión): observarDia ordena por fecha de creación
@@ -7,6 +8,7 @@ $ flutter test -j 1 --reporter expanded
 00:00 +5: test/unit/firestore_habitos_repository_test.dart: guardarNota actualiza nota_dia en todos los hábitos
 00:00 +6: test/unit/firestore_habitos_repository_test.dart: reiniciarDia desmarca todos los hábitos
 00:00 +7: test/unit/firestore_habitos_repository_test.dart: INC-005 (regresión): reiniciarDia también borra la nota
+00:00 +8: loading test/unit/habitos_logic_test.dart
 00:00 +8: test/unit/habitos_logic_test.dart: calcularProgreso sin hábitos devuelve 0 (no divide entre cero)
 00:00 +9: test/unit/habitos_logic_test.dart: calcularProgreso calcula la fracción de cumplidos
 00:00 +10: test/unit/habitos_logic_test.dart: calcularProgreso nunca supera 1.0 aunque los datos sean inconsistentes
@@ -19,20 +21,23 @@ $ flutter test -j 1 --reporter expanded
 00:00 +17: test/unit/habitos_logic_test.dart: mensajeMotivacional menos de 50 % → Buen inicio
 00:00 +18: test/unit/habitos_logic_test.dart: mensajeMotivacional entre 50 % y 99 % → ¡Vas muy bien!
 00:00 +19: test/unit/habitos_logic_test.dart: mensajeMotivacional 100 % → ¡Día completado!
+00:00 +20: loading test/unit/habito_model_test.dart
 00:00 +20: test/unit/habito_model_test.dart: Habito.fromMap mapea un documento completo
 00:00 +21: test/unit/habito_model_test.dart: Habito.fromMap tolera campos faltantes o con tipo incorrecto
 00:00 +22: test/unit/habito_model_test.dart: Habito.fromMap acepta fecha como Timestamp (documentos creados en consola)
 00:00 +23: test/unit/habito_model_test.dart: Habito.fromMap toMap → fromMap conserva los datos
 00:00 +24: test/unit/habito_model_test.dart: EstadoDia calcula totales y progreso
+00:00 +25: loading test/widget/formulario_habito_test.dart
 00:01 +25: test/widget/formulario_habito_test.dart: CP-07: nombre válido crea el hábito y regresa al panel
 00:02 +26: test/widget/formulario_habito_test.dart: INC-006 (regresión): sin conexión el formulario no se congela
 00:02 +27: test/widget/formulario_habito_test.dart: INC-006: si Firestore rechaza el alta se avisa al usuario
 00:02 +28: test/widget/formulario_habito_test.dart: CP-04: campo vacío muestra mensaje y no llama al servicio
 00:02 +29: test/widget/formulario_habito_test.dart: INC-002 (regresión): solo espacios no crea el hábito
 00:02 +30: test/widget/formulario_habito_test.dart: INC-002: el nombre se guarda sin espacios sobrantes
+00:02 +31: loading test/widget/panel_habitos_test.dart
 00:03 +31: test/widget/panel_habitos_test.dart: CP-12: lista vacía muestra mensaje de estado vacío
 00:03 +32: test/widget/panel_habitos_test.dart: CP-08: con datos muestra hábitos, progreso y nota
-00:03 +33: test/widget/panel_habitos_test.dart: CP-09: marcar un hábito actualiza el progreso
+00:04 +33: test/widget/panel_habitos_test.dart: CP-09: marcar un hábito actualiza el progreso
 00:04 +34: test/widget/panel_habitos_test.dart: CP-10: eliminar un hábito lo quita de la lista
 00:04 +35: test/widget/panel_habitos_test.dart: Modo enfoque oculta los hábitos completados
 00:04 +36: test/widget/panel_habitos_test.dart: CP-12: error de lectura muestra mensaje sin cerrar la app

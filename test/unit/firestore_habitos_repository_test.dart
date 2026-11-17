@@ -1,6 +1,6 @@
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lab_habitos_lenny_servino/data/firestore_habitos_repository.dart';
+import 'package:practica_integracion_pruebas_flutter/data/firestore_habitos_repository.dart';
 
 /// Prueba la implementación REAL del repositorio contra un Firestore en
 /// memoria (fake_cloud_firestore), sin red ni proyecto de Firebase.

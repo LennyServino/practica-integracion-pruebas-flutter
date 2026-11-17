@@ -7,7 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:lab_habitos_lenny_servino/main.dart';
+import 'package:practica_integracion_pruebas_flutter/main.dart';
 
 import '../test/fakes/fake_habitos_repository.dart';
 

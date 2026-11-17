@@ -1,6 +1,6 @@
 {
-    "name": "lab_habitos_lenny_servino",
-    "short_name": "lab_habitos_lenny_servino",
+    "name": "practica_integracion_pruebas_flutter",
+    "short_name": "practica_integracion_pruebas_flutter",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

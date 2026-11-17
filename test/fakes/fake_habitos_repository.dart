@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:lab_habitos_lenny_servino/data/habitos_repository.dart';
-import 'package:lab_habitos_lenny_servino/models/estado_dia.dart';
-import 'package:lab_habitos_lenny_servino/models/habito.dart';
+import 'package:practica_integracion_pruebas_flutter/data/habitos_repository.dart';
+import 'package:practica_integracion_pruebas_flutter/models/estado_dia.dart';
+import 'package:practica_integracion_pruebas_flutter/models/habito.dart';
 
 /// Repositorio en memoria para pruebas de widget e integración.
 /// Registra cada llamada en [llamadas] para verificar qué se invocó.
