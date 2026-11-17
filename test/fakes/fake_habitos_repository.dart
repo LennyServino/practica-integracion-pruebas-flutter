@@ -83,5 +83,6 @@ class FakeHabitosRepository implements HabitosRepository {
         for (var i = 0; i < _habitos.length; i++) {
           _habitos[i] = _habitos[i].copyWith(cumplido: false);
         }
+        nota = '';
       });
 }

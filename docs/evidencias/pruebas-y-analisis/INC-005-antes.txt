@@ -1,0 +1,14 @@
+# INC-005 - ANTES de la corrección (lib/ sin cambios: se espera FALLA)
+$ flutter test test/unit/firestore_habitos_repository_test.dart
+00:00 +0: agregarHabito crea el documento con los campos esperados
+00:00 +1: observarDia emite hábitos y la nota guardada
+00:00 +2: INC-004 (regresión): observarDia ordena por fecha de creación
+00:00 +3: alternarHabito invierte el campo cumplido
+00:00 +4: eliminarHabito borra el documento
+00:00 +5: guardarNota actualiza nota_dia en todos los hábitos
+00:00 +6: reiniciarDia desmarca todos los hábitos
+00:00 +7: INC-005 (regresión): reiniciarDia también borra la nota
+00:00 +7 -1: INC-005 (regresión): reiniciarDia también borra la nota [E]
+  Expected: ''
+    Actual: 'Nota de ayer'
+00:00 +7 -1: Some tests failed.

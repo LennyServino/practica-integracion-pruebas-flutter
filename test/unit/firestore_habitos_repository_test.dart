@@ -112,4 +112,14 @@ void main() {
     final docs = (await db.collection('habitos').get()).docs;
     expect(docs.map((d) => d.data()['cumplido']), everyElement(isFalse));
   });
+
+  test('INC-005 (regresión): reiniciarDia también borra la nota', () async {
+    await repo.agregarHabito('A');
+    final habitos = (await repo.observarDia().first).habitos;
+    await repo.guardarNota('Nota de ayer', habitos);
+
+    await repo.reiniciarDia(habitos);
+
+    expect((await repo.observarDia().first).nota, '');
+  });
 }

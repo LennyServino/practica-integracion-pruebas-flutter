@@ -60,7 +60,9 @@ class FirestoreHabitosRepository implements HabitosRepository {
   Future<void> reiniciarDia(List<Habito> habitos) {
     final batch = _db.batch();
     for (final h in habitos) {
-      batch.update(_habitos.doc(h.id), {'cumplido': false});
+      // INC-005: también se limpia la nota; antes quedaba visible en la
+      // tarjeta aunque la app decía haber reiniciado el día.
+      batch.update(_habitos.doc(h.id), {'cumplido': false, 'nota_dia': ''});
     }
     return batch.commit();
   }

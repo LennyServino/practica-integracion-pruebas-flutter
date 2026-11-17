@@ -1,0 +1,21 @@
+# INC-005 - DESPUÉS de la corrección (prueba de regresión)
+$ flutter test test/unit/firestore_habitos_repository_test.dart test/widget/panel_habitos_test.dart
+00:00 +0: test/unit/firestore_habitos_repository_test.dart: agregarHabito crea el documento con los campos esperados
+00:00 +1: test/unit/firestore_habitos_repository_test.dart: observarDia emite hábitos y la nota guardada
+00:00 +2: test/unit/firestore_habitos_repository_test.dart: INC-004 (regresión): observarDia ordena por fecha de creación
+00:00 +3: test/unit/firestore_habitos_repository_test.dart: alternarHabito invierte el campo cumplido
+00:00 +4: test/unit/firestore_habitos_repository_test.dart: eliminarHabito borra el documento
+00:00 +5: test/unit/firestore_habitos_repository_test.dart: guardarNota actualiza nota_dia en todos los hábitos
+00:00 +6: test/unit/firestore_habitos_repository_test.dart: reiniciarDia desmarca todos los hábitos
+00:00 +7: test/unit/firestore_habitos_repository_test.dart: INC-005 (regresión): reiniciarDia también borra la nota
+00:00 +8: test/widget/panel_habitos_test.dart: CP-12: lista vacía muestra mensaje de estado vacío
+00:01 +9: test/widget/panel_habitos_test.dart: CP-08: con datos muestra hábitos, progreso y nota
+00:01 +10: test/widget/panel_habitos_test.dart: CP-09: marcar un hábito actualiza el progreso
+00:01 +11: test/widget/panel_habitos_test.dart: CP-10: eliminar un hábito lo quita de la lista
+00:01 +12: test/widget/panel_habitos_test.dart: Modo enfoque oculta los hábitos completados
+00:01 +13: test/widget/panel_habitos_test.dart: CP-12: error de lectura muestra mensaje sin cerrar la app
+00:01 +14: test/widget/panel_habitos_test.dart: Guardar nota con hábitos la muestra en la tarjeta
+00:01 +15: test/widget/panel_habitos_test.dart: INC-003 (regresión): sin hábitos no confirma una nota falsa
+00:01 +16: test/widget/panel_habitos_test.dart: Reiniciar día desmarca hábitos y limpia la nota (INC-005)
+00:01 +17: test/widget/panel_habitos_test.dart: CP-05/CP-06: navega al formulario y regresa con "atrás"
+00:02 +18: All tests passed!

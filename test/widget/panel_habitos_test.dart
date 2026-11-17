@@ -140,6 +140,25 @@ void main() {
     expect(find.widgetWithText(TextField, 'Gran día'), findsOneWidget);
   });
 
+  testWidgets('Reiniciar día desmarca hábitos y limpia la nota (INC-005)', (
+    tester,
+  ) async {
+    final repo = FakeHabitosRepository(
+      habitos: const [Habito(id: '1', nombre: 'Leer', cumplido: true)],
+      nota: 'Nota de ayer',
+    );
+    await abrirApp(tester, repo);
+    expect(find.text('100%'), findsOneWidget);
+
+    await tester.tap(find.text('Reiniciar día'));
+    await tester.pump();
+
+    expect(repo.llamadas, ['reiniciarDia']);
+    expect(find.text('0%'), findsOneWidget);
+    expect(find.text('Sin nota'), findsOneWidget);
+    expect(find.text('Nota de ayer'), findsNothing);
+  });
+
   testWidgets('CP-05/CP-06: navega al formulario y regresa con "atrás"', (
     tester,
   ) async {
