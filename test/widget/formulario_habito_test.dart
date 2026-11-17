@@ -30,14 +30,47 @@ void main() {
     expect(find.text('Leer'), findsOneWidget);
   });
 
-  testWidgets('CP-04: campo vacío no llama al servicio', (tester) async {
+  testWidgets('CP-04: campo vacío muestra mensaje y no llama al servicio', (
+    tester,
+  ) async {
     final repo = FakeHabitosRepository();
     await abrirFormulario(tester, repo);
 
     await tester.tap(find.text('Guardar Hábito'));
     await tester.pumpAndSettle();
 
+    expect(find.text('Escribe el nombre del hábito'), findsOneWidget);
     expect(repo.llamadas, isEmpty);
     expect(find.text('Nuevo Hábito'), findsOneWidget);
+  });
+
+  testWidgets('INC-002 (regresión): solo espacios no crea el hábito', (
+    tester,
+  ) async {
+    final repo = FakeHabitosRepository();
+    await abrirFormulario(tester, repo);
+
+    await tester.enterText(find.byKey(const Key('campoNombreHabito')), '   ');
+    await tester.tap(find.text('Guardar Hábito'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Escribe el nombre del hábito'), findsOneWidget);
+    expect(repo.llamadas, isEmpty);
+  });
+
+  testWidgets('INC-002: el nombre se guarda sin espacios sobrantes', (
+    tester,
+  ) async {
+    final repo = FakeHabitosRepository();
+    await abrirFormulario(tester, repo);
+
+    await tester.enterText(
+      find.byKey(const Key('campoNombreHabito')),
+      '  Meditar  ',
+    );
+    await tester.tap(find.text('Guardar Hábito'));
+    await tester.pumpAndSettle();
+
+    expect(repo.llamadas, ['agregarHabito:Meditar']);
   });
 }

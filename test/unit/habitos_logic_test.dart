@@ -17,6 +17,23 @@ void main() {
     });
   });
 
+  group('validarNombreHabito (INC-002)', () {
+    test('rechaza null, vacío y solo espacios', () {
+      expect(validarNombreHabito(null), isNotNull);
+      expect(validarNombreHabito(''), isNotNull);
+      expect(validarNombreHabito('    '), isNotNull);
+    });
+
+    test('rechaza nombres demasiado largos', () {
+      expect(validarNombreHabito('a' * (maxLongitudNombre + 1)), isNotNull);
+    });
+
+    test('acepta un nombre válido (ignorando espacios externos)', () {
+      expect(validarNombreHabito('  Leer 20 min  '), isNull);
+      expect(validarNombreHabito('a' * maxLongitudNombre), isNull);
+    });
+  });
+
   group('mensajeMotivacional', () {
     test('0 % → ¡Empecemos!', () {
       expect(mensajeMotivacional(0), '¡Empecemos!');

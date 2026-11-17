@@ -1,0 +1,17 @@
+# INC-002 - DESPUÉS de la corrección (prueba de regresión)
+$ flutter test test/widget/formulario_habito_test.dart test/unit/habitos_logic_test.dart
+00:00 +0: test/widget/formulario_habito_test.dart: CP-07: nombre válido crea el hábito y regresa al panel
+00:00 +1: test/widget/formulario_habito_test.dart: CP-04: campo vacío muestra mensaje y no llama al servicio
+00:01 +2: test/widget/formulario_habito_test.dart: INC-002 (regresión): solo espacios no crea el hábito
+00:01 +3: test/widget/formulario_habito_test.dart: INC-002: el nombre se guarda sin espacios sobrantes
+00:01 +4: test/unit/habitos_logic_test.dart: calcularProgreso sin hábitos devuelve 0 (no divide entre cero)
+00:01 +5: test/unit/habitos_logic_test.dart: calcularProgreso calcula la fracción de cumplidos
+00:01 +6: test/unit/habitos_logic_test.dart: calcularProgreso nunca supera 1.0 aunque los datos sean inconsistentes
+00:01 +7: test/unit/habitos_logic_test.dart: validarNombreHabito (INC-002) rechaza null, vacío y solo espacios
+00:01 +8: test/unit/habitos_logic_test.dart: validarNombreHabito (INC-002) rechaza nombres demasiado largos
+00:01 +9: test/unit/habitos_logic_test.dart: validarNombreHabito (INC-002) acepta un nombre válido (ignorando espacios externos)
+00:01 +10: test/unit/habitos_logic_test.dart: mensajeMotivacional 0 % → ¡Empecemos!
+00:01 +11: test/unit/habitos_logic_test.dart: mensajeMotivacional menos de 50 % → Buen inicio
+00:01 +12: test/unit/habitos_logic_test.dart: mensajeMotivacional entre 50 % y 99 % → ¡Vas muy bien!
+00:01 +13: test/unit/habitos_logic_test.dart: mensajeMotivacional 100 % → ¡Día completado!
+00:01 +14: All tests passed!
