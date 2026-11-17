@@ -1,0 +1,15 @@
+# Fase 1 - flutter test sobre el commit «ajustando slider de meta…» (estado inicial) -> FALLA (INC-001)
+$ flutter test
+00:00 +0: Counter increments smoke test
+══╡ EXCEPTION CAUGHT BY WIDGETS LIBRARY ╞═══════════════════════════════════════════════════════════
+The following FirebaseException was thrown building Builder:
+[core/no-app] No Firebase App '[DEFAULT]' has been created - call Firebase.initializeApp()
+The relevant error-causing widget was:
+  MaterialApp  lib/main.dart:25:12
+When the exception was thrown, this was the stack:
+#0      MethodChannelFirebase.app (package:firebase_core_platform_interface/src/method_channel/method_channel_firebase.dart:190:5)
+#1      Firebase.app (package:firebase_core/src/firebase.dart:79:41)
+#2      FirebaseFirestore.instance (package:cloud_firestore/src/firestore.dart:33:21)
+#3      new _PanelHabitosState (package:lab_habitos_lenny_servino/main.dart:44:61)
+...
+Some tests failed.

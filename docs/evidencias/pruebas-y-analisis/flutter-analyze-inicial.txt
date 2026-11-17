@@ -1,0 +1,14 @@
+# Fase 1 - flutter analyze sobre el commit «ajustando slider de meta…» (estado inicial, antes de las correcciones)
+$ flutter analyze
+Analyzing lab_habitos_lenny_servino...
+
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - lib\main.dart:108:11 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - lib\main.dart:110:11 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - lib\main.dart:129:11 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - lib\main.dart:131:11 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - lib\main.dart:133:11 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - lib\main.dart:135:11 - curly_braces_in_flow_control_structures
+
+6 issues found. (ran in 1.1s)
+
+Resumen: 0 errores, 0 warnings, 6 infos.

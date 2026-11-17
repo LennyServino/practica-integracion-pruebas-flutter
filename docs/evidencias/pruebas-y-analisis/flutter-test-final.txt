@@ -1,0 +1,44 @@
+$ flutter test -j 1 --reporter expanded
+00:00 +0: test/unit/firestore_habitos_repository_test.dart: agregarHabito crea el documento con los campos esperados
+00:00 +1: test/unit/firestore_habitos_repository_test.dart: observarDia emite hábitos y la nota guardada
+00:00 +2: test/unit/firestore_habitos_repository_test.dart: INC-004 (regresión): observarDia ordena por fecha de creación
+00:00 +3: test/unit/firestore_habitos_repository_test.dart: alternarHabito invierte el campo cumplido
+00:00 +4: test/unit/firestore_habitos_repository_test.dart: eliminarHabito borra el documento
+00:00 +5: test/unit/firestore_habitos_repository_test.dart: guardarNota actualiza nota_dia en todos los hábitos
+00:00 +6: test/unit/firestore_habitos_repository_test.dart: reiniciarDia desmarca todos los hábitos
+00:00 +7: test/unit/firestore_habitos_repository_test.dart: INC-005 (regresión): reiniciarDia también borra la nota
+00:00 +8: test/unit/habitos_logic_test.dart: calcularProgreso sin hábitos devuelve 0 (no divide entre cero)
+00:00 +9: test/unit/habitos_logic_test.dart: calcularProgreso calcula la fracción de cumplidos
+00:00 +10: test/unit/habitos_logic_test.dart: calcularProgreso nunca supera 1.0 aunque los datos sean inconsistentes
+00:00 +11: test/unit/habitos_logic_test.dart: validarNombreHabito (INC-002) rechaza null, vacío y solo espacios
+00:00 +12: test/unit/habitos_logic_test.dart: validarNombreHabito (INC-002) rechaza nombres demasiado largos
+00:00 +13: test/unit/habitos_logic_test.dart: validarNombreHabito (INC-002) acepta un nombre válido (ignorando espacios externos)
+00:00 +14: test/unit/habitos_logic_test.dart: ordenarPorFecha (INC-004) ordena ascendente, sin fecha al final y desempata por nombre
+00:00 +15: test/unit/habitos_logic_test.dart: ordenarPorFecha (INC-004) no modifica la lista original
+00:00 +16: test/unit/habitos_logic_test.dart: mensajeMotivacional 0 % → ¡Empecemos!
+00:00 +17: test/unit/habitos_logic_test.dart: mensajeMotivacional menos de 50 % → Buen inicio
+00:00 +18: test/unit/habitos_logic_test.dart: mensajeMotivacional entre 50 % y 99 % → ¡Vas muy bien!
+00:00 +19: test/unit/habitos_logic_test.dart: mensajeMotivacional 100 % → ¡Día completado!
+00:00 +20: test/unit/habito_model_test.dart: Habito.fromMap mapea un documento completo
+00:00 +21: test/unit/habito_model_test.dart: Habito.fromMap tolera campos faltantes o con tipo incorrecto
+00:00 +22: test/unit/habito_model_test.dart: Habito.fromMap acepta fecha como Timestamp (documentos creados en consola)
+00:00 +23: test/unit/habito_model_test.dart: Habito.fromMap toMap → fromMap conserva los datos
+00:00 +24: test/unit/habito_model_test.dart: EstadoDia calcula totales y progreso
+00:01 +25: test/widget/formulario_habito_test.dart: CP-07: nombre válido crea el hábito y regresa al panel
+00:02 +26: test/widget/formulario_habito_test.dart: INC-006 (regresión): sin conexión el formulario no se congela
+00:02 +27: test/widget/formulario_habito_test.dart: INC-006: si Firestore rechaza el alta se avisa al usuario
+00:02 +28: test/widget/formulario_habito_test.dart: CP-04: campo vacío muestra mensaje y no llama al servicio
+00:02 +29: test/widget/formulario_habito_test.dart: INC-002 (regresión): solo espacios no crea el hábito
+00:02 +30: test/widget/formulario_habito_test.dart: INC-002: el nombre se guarda sin espacios sobrantes
+00:03 +31: test/widget/panel_habitos_test.dart: CP-12: lista vacía muestra mensaje de estado vacío
+00:03 +32: test/widget/panel_habitos_test.dart: CP-08: con datos muestra hábitos, progreso y nota
+00:03 +33: test/widget/panel_habitos_test.dart: CP-09: marcar un hábito actualiza el progreso
+00:04 +34: test/widget/panel_habitos_test.dart: CP-10: eliminar un hábito lo quita de la lista
+00:04 +35: test/widget/panel_habitos_test.dart: Modo enfoque oculta los hábitos completados
+00:04 +36: test/widget/panel_habitos_test.dart: CP-12: error de lectura muestra mensaje sin cerrar la app
+00:04 +37: test/widget/panel_habitos_test.dart: Guardar nota con hábitos la muestra en la tarjeta
+00:04 +38: test/widget/panel_habitos_test.dart: INC-003 (regresión): sin hábitos no confirma una nota falsa
+00:04 +39: test/widget/panel_habitos_test.dart: Reiniciar día desmarca hábitos y limpia la nota (INC-005)
+00:04 +40: test/widget/panel_habitos_test.dart: INC-006 (regresión): error de escritura avisa sin romper
+00:04 +41: test/widget/panel_habitos_test.dart: CP-05/CP-06: navega al formulario y regresa con "atrás"
+00:04 +42: All tests passed!

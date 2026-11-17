@@ -1,0 +1,3 @@
+$ flutter analyze
+Analyzing lab_habitos_lenny_servino...                          
+No issues found! (ran in 0.9s)
