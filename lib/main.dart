@@ -30,6 +30,9 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// ==========================================
+// PANTALLA 1: PANEL PRINCIPAL
+// ==========================================
 class PanelHabitos extends StatefulWidget {
   const PanelHabitos({super.key});
 
@@ -44,7 +47,6 @@ class _PanelHabitosState extends State<PanelHabitos> {
 
   int _meta = 3;
   bool _enfoque = false;
-  String _nota = '';
   final TextEditingController _notaCtrl = TextEditingController();
   static const int _metaInicial = 3;
 
@@ -70,10 +72,18 @@ class _PanelHabitosState extends State<PanelHabitos> {
     });
   }
 
-  void _guardarNota() {
-    setState(() {
-      _nota = _notaCtrl.text.trim();
-    });
+  void _guardarNota(List<QueryDocumentSnapshot> habitos) {
+    final texto = _notaCtrl.text.trim();
+    if (texto.isNotEmpty) {
+      for (var doc in habitos) {
+        _habitosRef.doc(doc.id).update({'nota_dia': texto});
+      }
+      _notaCtrl.clear();
+      FocusScope.of(context).unfocus(); // Oculta teclado
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Nota guardada en Firebase')),
+      );
+    }
   }
 
   void _reiniciarDia(List<QueryDocumentSnapshot> habitos) {
@@ -83,90 +93,65 @@ class _PanelHabitosState extends State<PanelHabitos> {
     setState(() {
       _meta = _metaInicial;
       _enfoque = false;
-      _nota = '';
       _notaCtrl.clear();
     });
   }
 
-  void _mostrarDialogoNuevoHabito() {
-    final TextEditingController newHabitoCtrl = TextEditingController();
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Nuevo Hábito'),
-        content: TextField(
-          controller: newHabitoCtrl,
-          decoration: const InputDecoration(hintText: 'Nombre del hábito'),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancelar'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              if (newHabitoCtrl.text.isNotEmpty) {
-                _habitosRef.add({
-                  'nombre': newHabitoCtrl.text,
-                  'cumplido': false,
-                  'fecha_creacion': DateTime.now().toIso8601String(),
-                });
-                Navigator.pop(context);
-              }
-            },
-            child: const Text('Guardar'),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Mis Hábitos')),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: _habitosRef.snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError)
-            return const Center(child: Text('Error al cargar'));
-          if (snapshot.connectionState == ConnectionState.waiting)
-            return const Center(child: CircularProgressIndicator());
+    // FIX: Envolvemos todo el Scaffold dentro del StreamBuilder
+    // para que la variable notaGuardada sea visible en el botón flotante.
+    return StreamBuilder<QuerySnapshot>(
+      stream: _habitosRef.snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError)
+          return const Scaffold(body: Center(child: Text('Error al cargar')));
+        if (!snapshot.hasData)
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
 
-          final habitos = snapshot.data!.docs;
-          final int totalHabitos = habitos.length;
-          final int totalCumplidos = habitos
-              .where((doc) => doc['cumplido'] == true)
-              .length;
-          final double progreso = totalHabitos == 0
-              ? 0
-              : totalCumplidos / totalHabitos;
-          final bool metaAlcanzada = totalCumplidos >= _meta;
+        final habitos = snapshot.data!.docs;
+        final int totalHabitos = habitos.length;
+        final int totalCumplidos = habitos.where((doc) {
+          final data = doc.data() as Map<String, dynamic>;
+          return data['cumplido'] == true;
+        }).length;
 
-          String mensaje;
-          final p = (progreso * 100).round();
-          if (p == 0)
-            mensaje = '¡Empecemos!';
-          else if (p < 50)
-            mensaje = 'Buen inicio';
-          else if (p < 100)
-            mensaje = '¡Vas muy bien!';
-          else
-            mensaje = '¡Día completado!';
+        final double progreso = totalHabitos == 0
+            ? 0
+            : totalCumplidos / totalHabitos;
+        final bool metaAlcanzada = totalCumplidos >= _meta;
 
-          // --- FIX DEL SLIDER (INC-001) ---
-          // Prevenimos que el Slider se rompa calculando topes lógicos de antemano
-          int maxSliderValue = totalHabitos > 0 ? totalHabitos : 1;
-          double sliderMax = maxSliderValue.toDouble();
-          double currentSliderValue = _meta > maxSliderValue
-              ? sliderMax
-              : _meta.toDouble();
-          int sliderDivisions = totalHabitos > 1 ? totalHabitos - 1 : 1;
+        String mensaje;
+        final p = (progreso * 100).round();
+        if (p == 0)
+          mensaje = '¡Empecemos!';
+        else if (p < 50)
+          mensaje = 'Buen inicio';
+        else if (p < 100)
+          mensaje = '¡Vas muy bien!';
+        else
+          mensaje = '¡Día completado!';
 
-          return ListView(
+        int maxSliderValue = totalHabitos > 5 ? totalHabitos : 5;
+        double sliderMax = maxSliderValue.toDouble();
+        double currentSliderValue = _meta > maxSliderValue
+            ? sliderMax
+            : _meta.toDouble();
+        int sliderDivisions = maxSliderValue - 1;
+
+        String notaGuardada = '';
+        if (habitos.isNotEmpty) {
+          final dataPrimerHabito = habitos.first.data() as Map<String, dynamic>;
+          notaGuardada = dataPrimerHabito['nota_dia'] ?? '';
+        }
+
+        return Scaffold(
+          appBar: AppBar(title: const Text('Mis Hábitos')),
+          body: ListView(
             padding: const EdgeInsets.all(16.0),
             children: [
-              // 1. Barra de progreso
               Row(
                 children: [
                   Expanded(
@@ -184,8 +169,6 @@ class _PanelHabitosState extends State<PanelHabitos> {
                 ],
               ),
               const SizedBox(height: 16),
-
-              // 2. Mensaje motivacional
               Center(
                 child: Text(
                   mensaje,
@@ -197,15 +180,13 @@ class _PanelHabitosState extends State<PanelHabitos> {
                 ),
               ),
               const Divider(height: 40),
-
-              // 3. Slider de meta (APLICANDO EL FIX)
               Column(
                 children: [
                   Slider(
                     value: currentSliderValue,
                     min: 1,
                     max: sliderMax,
-                    divisions: sliderDivisions,
+                    divisions: sliderDivisions > 0 ? sliderDivisions : 1,
                     onChanged: _cambiarMeta,
                   ),
                   Row(
@@ -231,16 +212,12 @@ class _PanelHabitosState extends State<PanelHabitos> {
                 ],
               ),
               const Divider(height: 40),
-
-              // 4. Switch de Modo enfoque
               SwitchListTile(
                 title: const Text('Modo enfoque'),
                 subtitle: const Text('Ocultar hábitos completados'),
                 value: _enfoque,
                 onChanged: _alternarEnfoque,
               ),
-
-              // 5. Lista de hábitos (Desde Firebase)
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
@@ -258,7 +235,7 @@ class _PanelHabitosState extends State<PanelHabitos> {
 
                 return CheckboxListTile(
                   title: Text(
-                    data['nombre'],
+                    data['nombre'] ?? '',
                     style: TextStyle(
                       decoration: cumplido ? TextDecoration.lineThrough : null,
                       color: cumplido ? Colors.grey : Colors.black,
@@ -275,8 +252,6 @@ class _PanelHabitosState extends State<PanelHabitos> {
                 );
               }),
               const Divider(height: 40),
-
-              // 6. Sección de notas
               const Text(
                 'Nota del día:',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -292,18 +267,17 @@ class _PanelHabitosState extends State<PanelHabitos> {
                         border: OutlineInputBorder(),
                         isDense: true,
                       ),
-                      onSubmitted: (_) => _guardarNota(),
+                      onSubmitted: (_) => _guardarNota(habitos),
                     ),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
-                    onPressed: _guardarNota,
+                    onPressed: () => _guardarNota(habitos),
                     child: const Text('Guardar'),
                   ),
                 ],
               ),
               const SizedBox(height: 16),
-
               Card(
                 color: Colors.green.shade50,
                 elevation: 0,
@@ -314,19 +288,19 @@ class _PanelHabitosState extends State<PanelHabitos> {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    _nota.isEmpty ? 'Sin nota' : _nota,
+                    notaGuardada.isEmpty ? 'Sin nota' : notaGuardada,
                     style: TextStyle(
-                      fontStyle: _nota.isEmpty
+                      fontStyle: notaGuardada.isEmpty
                           ? FontStyle.italic
                           : FontStyle.normal,
-                      color: _nota.isEmpty ? Colors.grey : Colors.black87,
+                      color: notaGuardada.isEmpty
+                          ? Colors.grey
+                          : Colors.black87,
                     ),
                   ),
                 ),
               ),
               const SizedBox(height: 32),
-
-              // 7. Botón Reiniciar Día
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
@@ -341,12 +315,105 @@ class _PanelHabitosState extends State<PanelHabitos> {
                 ),
               ),
             ],
-          );
-        },
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    FormularioHabito(notaActual: notaGuardada),
+              ),
+            ),
+            child: const Icon(Icons.add),
+          ),
+        );
+      },
+    );
+  }
+}
+
+// ==========================================
+// PANTALLA 2: FORMULARIO
+// ==========================================
+class FormularioHabito extends StatefulWidget {
+  final String notaActual;
+
+  const FormularioHabito({super.key, required this.notaActual});
+
+  @override
+  State<FormularioHabito> createState() => _FormularioHabitoState();
+}
+
+class _FormularioHabitoState extends State<FormularioHabito> {
+  final _controller = TextEditingController();
+  final CollectionReference _habitosRef = FirebaseFirestore.instance.collection(
+    'habitos',
+  );
+
+  void _guardarHabito() async {
+    if (_controller.text.isNotEmpty) {
+      await _habitosRef.add({
+        'nombre': _controller.text,
+        'cumplido': false,
+        'nota_dia': widget.notaActual,
+        'fecha_creacion': DateTime.now().toIso8601String(),
+      });
+      if (mounted) Navigator.pop(context); // Regresa a Pantalla 1
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Nuevo Hábito'),
+        backgroundColor: Colors.green.shade50,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _mostrarDialogoNuevoHabito,
-        child: const Icon(Icons.add),
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Añade un nuevo hábito a tu rutina diaria:',
+              style: TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 20),
+            TextField(
+              controller: _controller,
+              decoration: const InputDecoration(
+                labelText: 'Nombre del hábito',
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.star_border),
+              ),
+              autofocus: true,
+              onSubmitted: (_) => _guardarHabito(),
+            ),
+            const SizedBox(height: 30),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: _guardarHabito,
+                icon: const Icon(Icons.save),
+                label: const Text(
+                  'Guardar Hábito',
+                  style: TextStyle(fontSize: 16),
+                ),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  backgroundColor: Colors.green,
+                  foregroundColor: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
