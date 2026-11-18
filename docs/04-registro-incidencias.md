@@ -17,8 +17,7 @@ Cada incidencia corregida tiene una **prueba de regresión** que falla con el c�
 | INC-004 | La lista de hábitos sale en orden aleatorio (por ID) | Baja | P3 | Código | CP-08 | ✅ Corregida y re-probada | `fix: INC-004 …` |
 | INC-005 | "Reiniciar día" no borra la nota en Firestore | Media | P2 | Código | CP-24 | ✅ Corregida y re-probada | `fix: INC-005 …` |
 | INC-006 | Escrituras sin manejo de errores; formulario congelado sin conexión | Alta | P1 | Código | CP-25, CP-26 | ✅ Corregida y re-probada | `fix: INC-006 …` |
-| INC-007 | `firebase.exe` (256 MB) versionado: GitHub rechaza el push | Crítica | P1 | Repositorio | Fase 1 | ⚠️ Parcial (ver detalle) | `fix: INC-007 …` |
-| INC-008 | Credenciales de Firebase escritas en `lib/main.dart` | Alta | P1 | Configuración | CP-01 | ✅ Corregida (ver nota sobre historial) | `fix: INC-008 …` |
+| INC-007 | Credenciales de Firebase escritas en `lib/main.dart` | Alta | P1 | Configuración | CP-01 | ✅ Corregida (ver nota sobre historial) | `fix: INC-007 …` |
 
 ---
 
@@ -83,16 +82,7 @@ Cada incidencia corregida tiene una **prueba de regresión** que falla con el c�
 - **Corrección:** el helper `_ejecutar()` muestra el SnackBar "No se pudo guardar el cambio en Firebase…" cuando falla. El formulario ya no espera la confirmación: regresa de inmediato y avisa si falla. También se evita el doble toque.
 - **Regresión:** [antes](evidencias/pruebas-y-analisis/INC-006-antes.txt): 3 fallos → [después](evidencias/pruebas-y-analisis/INC-006-despues.txt): en verde. *Pendiente: confirmarlo en el emulador con modo avión (CP-26).*
 
-## INC-007 — Binario `firebase.exe` de 256 MB dentro del repositorio
-
-- **Severidad / Prioridad / Origen:** Crítica / P1 / Repositorio
-- **Reproducir:** `git push` de la rama.
-- **Obtenido / esperado:** GitHub rechaza archivos de más de 100 MB, así que el push falla y la entrega no es posible.
-- **Causa:** el ejecutable standalone de `firebase-tools` se descargó dentro del proyecto y entró en el commit «Primera integracion de firebase al proyecto» con `git add .`.
-- **Corrección:** `git rm --cached firebase.exe` y `*.exe` en `.gitignore` (commit `fix: INC-007 …`).
-- **Estado: parcial.** El archivo sigue en la **historia** (commit «Primera integracion de firebase al proyecto»), y eso basta para que GitHub rechace el push. Antes de subir hay que reescribir los commits locales que todavía no están en GitHub (ver README, sección "Antes de hacer push").
-
-## INC-008 — Credenciales de Firebase escritas en el código fuente
+## INC-007 — Credenciales de Firebase escritas en el código fuente
 
 - **Severidad / Prioridad / Origen:** Alta / P1 / Configuración
 - **Obtenido:** `apiKey`, `appId`, `messagingSenderId` y `projectId` aparecían literalmente en `lib/main.dart`, y la práctica prohíbe incluir claves de Firebase.
