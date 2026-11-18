@@ -89,8 +89,7 @@ Las salidas de `flutter test` y `flutter analyze` (inicial y final) y las ejecuc
 | 7 | Evidencias Firebase | [docs/evidencias/firebase/](docs/evidencias/firebase/) |
 | 8 | Pruebas automatizadas | [flutter-test-final.txt](docs/evidencias/pruebas-y-analisis/flutter-test-final.txt) |
 | 9 | Análisis estático | [flutter-analyze-final.txt](docs/evidencias/pruebas-y-analisis/flutter-analyze-final.txt) |
-| 10 | Historial de Git | `git log --oneline --grep "INC-"` |
-| 11 | Reflexión final | [docs/05-reflexion-final.md](docs/05-reflexion-final.md) |
+| 10 | Reflexión final | [docs/05-reflexion-final.md](docs/05-reflexion-final.md) |
 
 ---
 **Desarrollado por:** Lenny Alexander Servino Henriquez
