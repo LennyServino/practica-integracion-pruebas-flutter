@@ -11,4 +11,3 @@ Capturas de **Firestore Database → Datos → colección `habitos`** que muestr
 | `CP-10-consola-eliminado.png` | El documento ya no aparece | CP-10 |
 | `reglas-firestore.png` | Pestaña **Reglas** (verificar que no estén vencidas, ver INC-006) | — |
 
-⚠️ No incluir en las capturas la API key, la pestaña "Configuración del proyecto" ni `google-services.json`.

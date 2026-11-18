@@ -92,16 +92,6 @@ Las salidas de `flutter test` y `flutter analyze` (inicial y final) y las ejecuc
 | 10 | Historial de Git | `git log --oneline --grep "INC-"` |
 | 11 | Reflexión final | [docs/05-reflexion-final.md](docs/05-reflexion-final.md) |
 
-## ⚠️ Antes de hacer push (INC-007)
-
-El commit «Primera integracion de firebase al proyecto» incluyó `firebase.exe` (256 MB), y GitHub rechaza archivos de más de 100 MB. Aunque ya no se versiona, el archivo sigue en la historia local. Una vez integrada esta rama en `semana16-integracion`, se quita de los commits **que aún no se han subido** con:
-
-```bash
-git checkout semana16-integracion
-git filter-branch --index-filter "git rm --cached --ignore-unmatch firebase.exe" -- origin/main..HEAD
-git push -u origin semana16-integracion
-```
-
 ---
 **Desarrollado por:** Lenny Alexander Servino Henriquez
 **Tecnología:** Flutter 3.47 / Dart · Cloud Firestore
